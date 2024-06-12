@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import etudiants from '../../Données/Etudiant';
 import './ListeEtudiants.css';
+import { Link } from 'react-router-dom';
 
 const ListeEtudiants = () => {
   const [classeSelectionnee, setClasseSelectionnee] = useState('Toutes');
 
-  const classes = ['Toutes', ...new Set(etudiants.map(eleve => eleve.classe))];
+  const classes = ['Toutes', ...new Set(etudiants.map(etudiant => etudiant.classe))];
 
   const handleChange = (event) => {
     setClasseSelectionnee(event.target.value);
@@ -13,7 +14,7 @@ const ListeEtudiants = () => {
 
   const etudiantsFiltres = classeSelectionnee === 'Toutes'
     ? etudiants
-    : etudiants.filter(eleve => eleve.classe === classeSelectionnee);
+    : etudiants.filter(etudiant => etudiant.classe === classeSelectionnee);
 
   return (
     <div className="listeEtudiant">
@@ -24,11 +25,11 @@ const ListeEtudiants = () => {
             <option key={index} value={classe}>{classe}</option>
           ))}
         </select>
-        {etudiantsFiltres.map((eleve, index) => (
+        {etudiantsFiltres.map((etudiant, index) => (
           <div key={index} className="etudiantCard">
-            <p><strong>{eleve.prenom} {eleve.nom}</strong></p>
-            <p>Âge : {eleve.age} ans</p>
-            <p>Classe : {eleve.classe}</p>
+            <Link to={`/etudiant/${index}`}><p><strong>{etudiant.prenom} {etudiant.nom}</strong></p></Link>
+            <p>Âge : {etudiant.age} ans</p>
+            <p>Classe : {etudiant.classe}</p>
           </div>
         ))}
     </div>
@@ -36,3 +37,4 @@ const ListeEtudiants = () => {
 };
 
 export default ListeEtudiants;
+

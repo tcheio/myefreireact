@@ -5,6 +5,7 @@ import ListeEtudiants from './Components/Etudiants/ListeEtudiants';
 import ListeEnseignants from './Components/ListeEnseignants';
 import Classes from './Components/Classes';
 import './App.css';
+import DetailEtudiants from './Components/Etudiants/DetailEtudiants';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Accueil />} />
             <Route path="/etudiant" element={<ListeEtudiants />} />
+            <Route path="/etudiant/:id" element={<DetailEtudiants />} />
             <Route path="/enseignant" element={<ListeEnseignants />} />
             <Route path="/classes" element={<Classes />} />
           </Routes>
