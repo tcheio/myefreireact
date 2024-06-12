@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 const ListeEtudiants = () => {
   const [classeSelectionnee, setClasseSelectionnee] = useState('Toutes');
+  const [etudiants, setEtudiants] = useState(etudiants);
 
   const classes = ['Toutes', ...new Set(classesIndex.map(classe => classe.nom))];
 
@@ -25,6 +26,12 @@ const ListeEtudiants = () => {
     return classe ? classe.nom : 'Non attribué';
   };
 
+  const supprimerEtudiant = (index) => {
+    const nouvelleListeEtudiants = [...etudiants];
+    nouvelleListeEtudiants.splice(index, 1);
+    setEtudiants(nouvelleListeEtudiants);
+  };
+
   return (
     <div className="listeEtudiant">
       <h2>Liste des élèves</h2>
@@ -38,6 +45,13 @@ const ListeEtudiants = () => {
         <div key={index} className="etudiantCard">
           <Link to={`/etudiant/${index}`}><p><strong>{etudiant.prenom} {etudiant.nom}</strong></p></Link>
           <p>Âge : {etudiant.age} ans</p>
+          <p>Classe : {etudiant.classe}</p>
+          <button onClick={() => supprimerEtudiant(index)}>Supprimer</button>
+        </div>
+      ))}
+      <Link to="/add-etudiant">
+        <button>Ajouter un étudiant</button>
+      </Link>
           <p>Classe : {getClasseNom(etudiant.classesId)}</p>
         </div>
       ))}

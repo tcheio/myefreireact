@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import enseignants from '../../Données/Enseignant';
+import enseignantsData from '../../Données/Enseignant';
 
 const ListeEnseignant = () => {
   const [selectedMatiere, setSelectedMatiere] = useState('');
+  const [enseignants, setEnseignants] = useState(enseignantsData);
 
   const handleMatiereChange = (event) => {
     setSelectedMatiere(event.target.value);
@@ -14,6 +15,12 @@ const ListeEnseignant = () => {
     : enseignants;
 
   const uniqueMatieres = [...new Set(enseignants.map(enseignant => enseignant.matiere))];
+
+  const supprimerEnseignant = (index) => {
+    const nouvelleListeEnseignants = [...enseignants];
+    nouvelleListeEnseignants.splice(index, 1);
+    setEnseignants(nouvelleListeEnseignants);
+  };
 
   return (
     <div className="TeachersList">
@@ -27,13 +34,14 @@ const ListeEnseignant = () => {
           ))}
         </select>
       </div>
-      <ul>
-        {filteredEnseignants.map((enseignant, index) => (
-          <li key={index}>
-            <Link to={`/enseignants/${index}`}>{enseignant.prenom} {enseignant.nom}</Link>, {enseignant.age} ans, matière : {enseignant.matiere}
-          </li>
-        ))}
-      </ul>
+      {filteredEnseignants.map((enseignant, index) => (
+        <div key={index} className="etudiantCard">
+          <Link to={`/enseignants/${index}`}><p><strong>{enseignant.prenom} {enseignant.nom}</strong></p></Link>
+          <p>Âge : {enseignant.age} ans</p>
+          <p>Matière : {enseignant.matiere}</p>
+          <button onClick={() => supprimerEnseignant(index)}>Supprimer</button>
+        </div>
+      ))}
       <Link to="/add-enseignant">
         <button>Ajouter un enseignant</button>
       </Link>

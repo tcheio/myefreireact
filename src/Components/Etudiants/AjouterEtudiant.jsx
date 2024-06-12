@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import enseignants from '../../Données/Enseignant';
+import enseignants from '../../Données/Etudiant';
 
-const AjouterEnseignant = () => {
+const AjouterEtudiant = () => {
   const [nom, setNom] = useState('');
   const [prenom, setPrenom] = useState('');
   const [age, setAge] = useState('');
-  const [matiere, setMatiere] = useState('');
+  const [classe, setClasse] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -15,15 +15,15 @@ const AjouterEnseignant = () => {
       nom,
       prenom,
       age: parseInt(age, 10),
-      matiere
+      classe
     };
     enseignants.push(newEnseignant);
-    navigate('/enseignant');
+    navigate('/etudiant');
   };
 
   return (
-    <div className="AddEnseignant">
-      <h2>Ajouter un enseignant</h2>
+    <div className="AddEtudiant">
+      <h2>Ajouter un etudiant</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Nom:</label>
@@ -38,8 +38,8 @@ const AjouterEnseignant = () => {
           <input type="number" value={age} onChange={(e) => setAge(e.target.value)} required />
         </div>
         <div>
-          <label>Matière:</label>
-          <input type="text" value={matiere} onChange={(e) => setMatiere(e.target.value)} required />
+          <label>Classe:</label>
+          <input type="text" value={classe} onChange={(e) => setClasse(e.target.value)} required />
         </div>
         <button type="submit">Ajouter</button>
       </form>
@@ -47,4 +47,4 @@ const AjouterEnseignant = () => {
   );
 };
 
-export default AjouterEnseignant;
+export default AjouterEtudiant;
