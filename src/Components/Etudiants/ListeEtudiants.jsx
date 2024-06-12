@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import etudiantsData from '../../Données/Etudiant';
 import classesIndex from '../../Données/Classes';
-import './ListeEtudiants.css';
 import { Link } from 'react-router-dom';
 
 const ListeEtudiants = () => {
