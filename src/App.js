@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Accueil from './Components/Accueil';
-import ListeEtudiants from './Components/ListeEtudiants';
+import ListeEtudiants from './Components/Edutiants/ListeEtudiants.jsx';
 import ListeEnseignants from './Components/ListeEnseignants';
 import Classes from './Components/Classes';
 import './App.css';
