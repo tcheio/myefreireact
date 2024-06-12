@@ -5,9 +5,15 @@ import etudiants from '../../Données/Etudiant';
 
 const ClasseDetail = () => {
   const { id } = useParams();
-  const classe = classes.find(classe => classe.id === parseInt(id, 10));
-  const elevesInClasse = etudiants.filter(eleve => eleve.classeId === parseInt(id, 10));
-  console.log(eleve.nom);
+  const classeId = parseInt(id, 10);
+
+  console.log("Classe ID from useParams:", classeId);
+  
+  const classe = classes.find(classe => classe.id === classeId);
+  const elevesInClasse = etudiants.filter(eleve => eleve.classesId === classeId);
+
+  console.log("Classe trouvée:", classe);
+  console.log("Étudiants dans la classe:", elevesInClasse);
 
   if (!classe) {
     return <div>Classe non trouvée</div>;
