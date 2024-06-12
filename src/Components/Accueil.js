@@ -6,11 +6,11 @@ const Accueil = () => {
     <div className="Home">
       <h1>Bienvenue sur notre plateforme</h1>
       <div>
-        <Link to="/students">
-          <button>Afficher la liste des élèves</button>
+        <Link to="/etudiant">
+          <button>Afficher la liste des Etudiants</button>
         </Link>
-        <Link to="/teachers">
-          <button>Afficher la liste des enseignants</button>
+        <Link to="/enseignant">
+          <button>Afficher la liste des Enseignants</button>
         </Link>
         <Link to="/classes">
           <button>Afficher toutes les classes</button>

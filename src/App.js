@@ -4,7 +4,6 @@ import Accueil from './Components/Accueil';
 import ListeEtudiants from './Components/ListeEtudiants';
 import ListeEnseignants from './Components/ListeEnseignants';
 import Classes from './Components/Classes';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -14,8 +13,8 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Accueil />} />
-            <Route path="/students" element={<ListeEtudiants />} />
-            <Route path="/teachers" element={<ListeEnseignants />} />
+            <Route path="/etudiant" element={<ListeEtudiants />} />
+            <Route path="/enseignant" element={<ListeEnseignants />} />
             <Route path="/classes" element={<Classes />} />
           </Routes>
           <nav>
