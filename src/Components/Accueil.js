@@ -15,6 +15,9 @@ const Accueil = () => {
         <Link to="/classes">
           <button>Afficher toutes les classes</button>
         </Link>
+        <Link to="/actualite">
+          <button>Afficher toutes les actualitées</button>
+        </Link>
       </div>
     </div>
   );
