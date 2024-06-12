@@ -4,6 +4,7 @@ import Accueil from './Components/Accueil';
 import ListeEtudiants from './Components/ListeEtudiants';
 import ListeEnseignants from './Components/Enseignants/ListeEnseignants';
 import EnseignantDetail from './Components/Enseignants/EnseignantDetail';
+import AjouterEnseignant from './Components/Enseignants/AjouterEnseignant';
 import Classes from './Components/Classes';
 import './App.css';
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/etudiant" element={<ListeEtudiants />} />
             <Route path="/enseignant" element={<ListeEnseignants />} />
             <Route path="/enseignants/:id" element={<EnseignantDetail />} />
+            <Route path="/add-enseignant" element={<AjouterEnseignant />} />
             <Route path="/classes" element={<Classes />} />
           </Routes>
           <nav>

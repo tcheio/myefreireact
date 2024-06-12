@@ -36,6 +36,9 @@ const ListeEnseignant = () => {
           </li>
         ))}
       </ul>
+      <Link to="/add-enseignant">
+        <button>Ajouter un enseignant</button>
+      </Link>
     </div>
   );
 };
