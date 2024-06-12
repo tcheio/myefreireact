@@ -3,7 +3,7 @@ const etudiants = [
     nom: "Martin",
     prenom: "Jean",
     age: 14,
-    classe: "3ème",
+    classesId: 1,
     notes: {
       Mathematiques: 14.5,
       Francais: null,
@@ -14,7 +14,7 @@ const etudiants = [
     nom: "Dubois",
     prenom: "Marie",
     age: 13,
-    classe: "4ème",
+    classesId: 1,
     notes: {
       Mathematiques: null,
       Francais: 15.0,
@@ -25,7 +25,7 @@ const etudiants = [
     nom: "Lefevre",
     prenom: "Paul",
     age: 12,
-    classe: "5ème",
+    classesId: 2,
     notes: {
       Mathematiques: 11.0,
       Francais: 13.5,
@@ -36,7 +36,7 @@ const etudiants = [
     nom: "Moreau",
     prenom: "Lucie",
     age: 15,
-    classe: "2nde",
+    classesId: 3,
     notes: {
       Mathematiques: 16.0,
       Francais: 14.0,
@@ -47,7 +47,7 @@ const etudiants = [
     nom: "Simon",
     prenom: "Thomas",
     age: 16,
-    classe: "1ère",
+    classesId: 4,
     notes: {
       Mathematiques: null,
       Francais: 12.0,
@@ -58,7 +58,7 @@ const etudiants = [
     nom: "Laurent",
     prenom: "Sophie",
     age: 17,
-    classe: "Terminale",
+    classesId: 5,
     notes: {
       Mathematiques: 18.0,
       Francais: null,
@@ -69,7 +69,7 @@ const etudiants = [
     nom: "Garcia",
     prenom: "Emma",
     age: 14,
-    classe: "3ème",
+    classesId: 2,
     notes: {
       Mathematiques: 15.0,
       Francais: 13.0,
@@ -80,7 +80,7 @@ const etudiants = [
     nom: "Roux",
     prenom: "Louis",
     age: 13,
-    classe: "4ème",
+    classesId: 1,
     notes: {
       Mathematiques: null,
       Francais: 12.5,
@@ -91,7 +91,7 @@ const etudiants = [
     nom: "Petit",
     prenom: "Camille",
     age: 12,
-    classe: "5ème",
+    classesId: 1,
     notes: {
       Mathematiques: 13.5,
       Francais: null,
@@ -102,7 +102,7 @@ const etudiants = [
     nom: "Durand",
     prenom: "Hugo",
     age: 15,
-    classe: "2nde",
+    classesId: 2,
     notes: {
       Mathematiques: 16.5,
       Francais: 15.0,
@@ -113,7 +113,7 @@ const etudiants = [
     nom: "Morel",
     prenom: "Chloe",
     age: 16,
-    classe: "1ère",
+    classesId: 4,
     notes: {
       Mathematiques: null,
       Francais: 13.0,
@@ -124,7 +124,7 @@ const etudiants = [
     nom: "Fournier",
     prenom: "Nathan",
     age: 17,
-    classe: "Terminale",
+    classesId: 5,
     notes: {
       Mathematiques: 14.0,
       Francais: null,
@@ -135,7 +135,7 @@ const etudiants = [
     nom: "Girard",
     prenom: "Alice",
     age: 14,
-    classe: "3ème",
+    classesId: 2,
     notes: {
       Mathematiques: 12.0,
       Francais: 14.5,
@@ -146,7 +146,7 @@ const etudiants = [
     nom: "Andre",
     prenom: "Lucas",
     age: 13,
-    classe: "4ème",
+    classesId: 1,
     notes: {
       Mathematiques: 13.5,
       Francais: 11.0,
@@ -157,7 +157,7 @@ const etudiants = [
     nom: "Lemoine",
     prenom: "Lena",
     age: 12,
-    classe: "5ème",
+    classesId: 4,
     notes: {
       Mathematiques: null,
       Francais: 12.0,
@@ -168,7 +168,7 @@ const etudiants = [
     nom: "Renard",
     prenom: "Mathis",
     age: 15,
-    classe: "2nde",
+    classesId: 3,
     notes: {
       Mathematiques: 14.0,
       Francais: null,
@@ -179,7 +179,7 @@ const etudiants = [
     nom: "Marchand",
     prenom: "Ines",
     age: 16,
-    classe: "1ère",
+    classesId: 4,
     notes: {
       Mathematiques: 16.5,
       Francais: 14.0,
@@ -190,7 +190,7 @@ const etudiants = [
     nom: "Riviere",
     prenom: "Noah",
     age: 17,
-    classe: "Terminale",
+    classesId: 5,
     notes: {
       Mathematiques: null,
       Francais: 15.5,
@@ -201,7 +201,7 @@ const etudiants = [
     nom: "Colin",
     prenom: "Mia",
     age: 14,
-    classe: "3ème",
+    classesId: 2,
     notes: {
       Mathematiques: 12.5,
       Francais: null,
@@ -212,7 +212,7 @@ const etudiants = [
     nom: "Vidal",
     prenom: "Ethan",
     age: 13,
-    classe: "4ème",
+    classesId: 1,
     notes: {
       Mathematiques: 13.0,
       Francais: 12.5,

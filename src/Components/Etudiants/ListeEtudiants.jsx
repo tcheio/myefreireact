@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import etudiantsData from '../../Données/Etudiant';
+import etudiants from '../../Données/Etudiant';
+import classesIndex from '../../Données/Classes';
 import './ListeEtudiants.css';
 import { Link } from 'react-router-dom';
 
 const ListeEtudiants = () => {
   const [classeSelectionnee, setClasseSelectionnee] = useState('Toutes');
-  const [etudiants, setEtudiants] = useState(etudiantsData);
+  const [etudiants, setEtudiants] = useState(etudiants);
 
-  const classes = ['Toutes', ...new Set(etudiants.map(etudiant => etudiant.classe))];
+  const classes = ['Toutes', ...new Set(classesIndex.map(classe => classe.nom))];
 
   const handleChange = (event) => {
     setClasseSelectionnee(event.target.value);
@@ -15,7 +16,15 @@ const ListeEtudiants = () => {
 
   const etudiantsFiltres = classeSelectionnee === 'Toutes'
     ? etudiants
-    : etudiants.filter(etudiant => etudiant.classe === classeSelectionnee);
+    : etudiants.filter(etudiant => {
+        const classe = classesIndex.find(classe => classe.id === etudiant.classesId);
+        return classe && classe.nom === classeSelectionnee;
+      });
+
+  const getClasseNom = (classesId) => {
+    const classe = classesIndex.find(classe => classe.id === classesId);
+    return classe ? classe.nom : 'Non attribué';
+  };
 
   const supprimerEtudiant = (index) => {
     const nouvelleListeEtudiants = [...etudiants];
@@ -43,6 +52,9 @@ const ListeEtudiants = () => {
       <Link to="/add-etudiant">
         <button>Ajouter un étudiant</button>
       </Link>
+          <p>Classe : {getClasseNom(etudiant.classesId)}</p>
+        </div>
+      ))}
     </div>
   );
 };
