@@ -32,7 +32,11 @@ const ListeEtudiants = () => {
             <p>Classe : {etudiant.classe}</p>
           </div>
         ))}
+      <Link to="/add-etudiant">
+        <button>Ajouter un eleve</button>
+      </Link>
     </div>
+    
   );
 };
 
