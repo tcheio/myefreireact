@@ -18,7 +18,7 @@ const AjouterEnseignant = () => {
       matiere
     };
     enseignants.push(newEnseignant);
-    navigate('/enseignants');
+    navigate('/enseignant');
   };
 
   return (
