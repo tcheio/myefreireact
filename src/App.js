@@ -6,8 +6,8 @@ import EnseignantDetail from './Components/Enseignants/EnseignantDetail';
 import AjouterEnseignant from './Components/Enseignants/AjouterEnseignant';
 import ListeEtudiants from './Components/Etudiants/ListeEtudiants';
 import DetailEtudiants from './Components/Etudiants/DetailEtudiants';
-
-import Classes from './Components/Classes';
+import ListeClasses from './Components/Classes/ListeClasses';
+import ClasseDetail from './Components/Classes/ClasseDetail';
 import './App.css';
 
 
@@ -23,7 +23,8 @@ function App() {
             <Route path="/enseignant" element={<ListeEnseignants />} />
             <Route path="/enseignants/:id" element={<EnseignantDetail />} />
             <Route path="/add-enseignant" element={<AjouterEnseignant />} />
-            <Route path="/classes" element={<Classes />} />
+            <Route path="/classes" element={<ListeClasses />} />
+            <Route path="/classes/:id" element={<ClasseDetail />} />
           </Routes>
           <nav>
             <Link to="/">Home</Link>
