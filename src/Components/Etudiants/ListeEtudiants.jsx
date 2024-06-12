@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import eleves from '../../Données/Eleves';
+import etudiants from '../../Données/Etudiant';
 import './ListeEtudiants.css';
 
 const ListeEtudiants = () => {
   const [classeSelectionnee, setClasseSelectionnee] = useState('Toutes');
 
-  const classes = ['Toutes', ...new Set(eleves.map(eleve => eleve.classe))];
+  const classes = ['Toutes', ...new Set(etudiants.map(eleve => eleve.classe))];
 
   const handleChange = (event) => {
     setClasseSelectionnee(event.target.value);
   };
 
   const etudiantsFiltres = classeSelectionnee === 'Toutes'
-    ? eleves
-    : eleves.filter(eleve => eleve.classe === classeSelectionnee);
+    ? etudiants
+    : etudiants.filter(eleve => eleve.classe === classeSelectionnee);
 
   return (
     <div className="listeEtudiant">

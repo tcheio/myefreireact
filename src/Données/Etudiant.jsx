@@ -1,4 +1,4 @@
-const eleves = [
+const etudiants = [
     {
       nom: "Martin",
       prenom: "Jean",
@@ -122,5 +122,5 @@ const eleves = [
   ];
   
 
-  export default eleves;
+  export default etudiants;
   
