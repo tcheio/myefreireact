@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Accueil from './Components/Accueil';
-import ListeEtudiants from './Components/ListeEtudiants';
 import ListeEnseignants from './Components/Enseignants/ListeEnseignants';
 import EnseignantDetail from './Components/Enseignants/EnseignantDetail';
 import AjouterEnseignant from './Components/Enseignants/AjouterEnseignant';
+import ListeEtudiants from './Components/Etudiants/ListeEtudiants';
 import DetailEtudiants from './Components/Etudiants/DetailEtudiants';
 
 import Classes from './Components/Classes';
