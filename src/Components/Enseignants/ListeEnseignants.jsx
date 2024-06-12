@@ -30,9 +30,7 @@ const ListeEnseignant = () => {
       <ul>
         {filteredEnseignants.map((enseignant, index) => (
           <li key={index}>
-            <Link to={`/enseignants/${index}`}>
-              {enseignant.prenom} {enseignant.nom}, {enseignant.age} ans, matière : {enseignant.matiere}
-            </Link>
+            <Link to={`/enseignants/${index}`}>{enseignant.prenom} {enseignant.nom}</Link>, {enseignant.age} ans, matière : {enseignant.matiere}
           </li>
         ))}
       </ul>
