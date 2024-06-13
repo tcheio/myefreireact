@@ -21,7 +21,7 @@ const AjouterCours = () => {
   };
 
   return (
-    <div className="AjouterCours">
+    <div className="Add">
       <h4>Ajouter un nouveau cours :</h4>
       <form onSubmit={handleAddCourse}>
         <div>

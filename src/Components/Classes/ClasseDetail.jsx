@@ -13,7 +13,7 @@ const ClasseDetail = () => {
   }
 
   return (
-    <div className="ClasseDetail">
+    <div className="Detail">
       <h2>{classe.nom}</h2>
       <h3>Professeur référent : {classe.professeur}</h3>
       <h4>Liste des étudiants :</h4>

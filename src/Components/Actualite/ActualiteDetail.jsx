@@ -11,12 +11,12 @@ const ActualiteDetail = () => {
   }
 
   return (
-    <div className="ActualiteDetail">
+    <div className="Detail">
       <h2>Détails de l'actualité</h2>
-      <p>Titre : {actualite.titre}</p>
-      <p>Description : {actualite.description}</p>
-      <p>Date : {actualite.date}</p>
-      <p>Type : {actualite.type}</p>
+      <p className='left'><strong>Titre :</strong> {actualite.titre}</p>
+      <p className='left'><strong>Description :</strong> {actualite.description}</p>
+      <p className='left'><strong>Date :</strong> {actualite.date}</p>
+      <p className='left'><strong>Type :</strong> {actualite.type}</p>
     </div>
   );
 };

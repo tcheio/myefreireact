@@ -22,7 +22,7 @@ const AjouterActualite = () => {
   };
 
   return (
-    <div className="AddActualite">
+    <div className="Add">
       <h2>Ajouter une actualité</h2>
       <form onSubmit={handleSubmit}>
         <div>

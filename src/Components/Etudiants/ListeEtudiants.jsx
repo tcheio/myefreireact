@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import etudiantsData from '../../Données/Etudiant';
 import classesIndex from '../../Données/Classes';
 import { Link } from 'react-router-dom';
+import '../../style/Profil.css';
 
 const ListeEtudiants = () => {
-  const [classeSelectionnee, setClasseSelectionnee] = useState('Toutes');
+  const [classeSelectionnee, setClasseSelectionnee] = useState('Classes');
   const [etudiants, setEtudiants] = useState(etudiantsData);
 
-  const classes = ['Toutes', ...new Set(classesIndex.map(classe => classe.nom))];
+  const classes = ['Classes', ...new Set(classesIndex.map(classe => classe.nom))];
 
   const handleChange = (event) => {
     setClasseSelectionnee(event.target.value);
   };
 
-  const etudiantsFiltres = classeSelectionnee === 'Toutes'
+  const etudiantsFiltres = classeSelectionnee === 'Classes'
     ? etudiants
     : etudiants.filter(etudiant => {
         const classe = classesIndex.find(classe => classe.id === etudiant.classesId);
@@ -32,25 +33,27 @@ const ListeEtudiants = () => {
   };
 
   return (
-    <div className="listeEtudiant">
+    <div className="liste">
       <h2>Liste des élèves</h2>
+      <Link to="/etudiant/ajouter">
+        <button className="Boutonadd">Ajouter un étudiant</button>
+      </Link>
       <label htmlFor="classe">Sélectionnez une classe :</label>
       <select id="classe" value={classeSelectionnee} onChange={handleChange}>
         {classes.map((classe, index) => (
           <option key={index} value={classe}>{classe}</option>
         ))}
       </select>
-      {etudiantsFiltres.map((etudiant, index) => (
-        <div key={index} className="etudiantCard">
-          <Link to={`/etudiant/${index}`}><p><strong>{etudiant.prenom} {etudiant.nom}</strong></p></Link>
-          <p>Âge : {etudiant.age} ans</p>
-          <p>Classe : {getClasseNom(etudiant.classesId)}</p>
-          <button onClick={() => supprimerEtudiant(index)}>Supprimer</button>
-        </div>
-      ))}
-      <Link to="/etudiant/ajouter">
-        <button>Ajouter un étudiant</button>
-      </Link>
+      <div className="grid">
+        {etudiantsFiltres.map((etudiant, index) => (
+          <div key={index} className="card">
+            <Link to={`/etudiant/${index}`}><p><strong>{etudiant.prenom} {etudiant.nom}</strong></p></Link>
+            <p>Âge : {etudiant.age} ans</p>
+            <p>Classe : {getClasseNom(etudiant.classesId)}</p>
+            <button onClick={() => supprimerEtudiant(index)}>Supprimer</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

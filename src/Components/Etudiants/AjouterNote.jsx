@@ -26,7 +26,7 @@ const AjouterNote = () => {
   };
 
   return (
-    <div className="AddEtudiant">
+    <div className="Add">
       <h2>Ajouter une note</h2>
       <form onSubmit={handleSubmit}>
         <div>

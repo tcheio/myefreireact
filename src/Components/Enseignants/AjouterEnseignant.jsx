@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import enseignants from '../../Données/Enseignant';
+import '../../style/Formulaire.css';
 
 const AjouterEnseignant = () => {
   const [nom, setNom] = useState('');
@@ -22,7 +23,7 @@ const AjouterEnseignant = () => {
   };
 
   return (
-    <div className="AddEnseignant">
+    <div className="Add">
       <h2>Ajouter un enseignant</h2>
       <form onSubmit={handleSubmit}>
         <div>

@@ -1,22 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../style/Accueil.css';
 
 const Accueil = () => {
   return (
     <div className="Accueil">
-      <h1>Bienvenue sur notre plateforme</h1>
-      <div>
+      <h1>Bienvenue sur votre espace admin</h1>
+      <div className="buttons-container">
         <Link to="/etudiant">
-          <button>Afficher la liste des Etudiants</button>
+          <button className="btn">Gérer la liste des Etudiants</button>
         </Link>
         <Link to="/enseignant">
-          <button>Afficher la liste des Enseignants</button>
+          <button className="btn">Gérer la liste des Enseignants</button>
         </Link>
         <Link to="/classes">
-          <button>Afficher toutes les classes</button>
+          <button className="btn">Gérer toutes les classes</button>
         </Link>
         <Link to="/actualite">
-          <button>Afficher toutes les actualitées</button>
+          <button className="btn">Gérer toutes les actualitées</button>
         </Link>
       </div>
     </div>

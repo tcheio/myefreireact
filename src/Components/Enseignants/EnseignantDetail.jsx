@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import enseignants from '../../Données/Enseignant';
+import '../../style/Detail.css';
 
 const EnseignantDetail = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const EnseignantDetail = () => {
   }
 
   return (
-    <div className="EnseignantDetail">
+    <div className="Detail">
       <h2>Détails de l'enseignant</h2>
       <p>Nom : {enseignant.nom}</p>
       <p>Prénom : {enseignant.prenom}</p>
