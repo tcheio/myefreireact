@@ -5,16 +5,16 @@ import { Link } from 'react-router-dom';
 import '../../style/Profil.css';
 
 const ListeEtudiants = () => {
-  const [classeSelectionnee, setClasseSelectionnee] = useState('Toutes');
+  const [classeSelectionnee, setClasseSelectionnee] = useState('Classes');
   const [etudiants, setEtudiants] = useState(etudiantsData);
 
-  const classes = ['Toutes', ...new Set(classesIndex.map(classe => classe.nom))];
+  const classes = ['Classes', ...new Set(classesIndex.map(classe => classe.nom))];
 
   const handleChange = (event) => {
     setClasseSelectionnee(event.target.value);
   };
 
-  const etudiantsFiltres = classeSelectionnee === 'Toutes'
+  const etudiantsFiltres = classeSelectionnee === 'Classes'
     ? etudiants
     : etudiants.filter(etudiant => {
         const classe = classesIndex.find(classe => classe.id === etudiant.classesId);

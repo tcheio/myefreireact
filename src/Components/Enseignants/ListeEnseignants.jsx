@@ -31,7 +31,7 @@ const ListeEnseignant = () => {
 
       <label htmlFor="matiere-select">Filtrer par matière: </label>
       <select id="matiere-select" value={selectedMatiere} onChange={handleMatiereChange}>
-        <option value="">Toutes les matières</option>
+        <option value="">Enseignants</option>
         {uniqueMatieres.map((matiere, index) => (
           <option key={index} value={matiere}>{matiere}</option>
         ))}
