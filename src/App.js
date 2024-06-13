@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Accueil from './Components/Accueil';
+import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
 import ListeEnseignants from './Components/Enseignants/ListeEnseignants';
 import EnseignantDetail from './Components/Enseignants/EnseignantDetail';
 import AjouterEnseignant from './Components/Enseignants/AjouterEnseignant';
@@ -12,21 +11,36 @@ import ListeClasses from './Components/Classes/ListeClasses';
 import ClasseDetail from './Components/Classes/ClasseDetail';
 import ClassePlanning from './Components/Classes/ClassesPlanning';
 import AjouterCours from './Components/Classes/AjouterCours';
-import { PlanningProvider } from './Context/PlanningContext';
 import ListeActualites from './Components/Actualite/ListeActualites';
 import ActualiteDetail from './Components/Actualite/ActualiteDetail';
 import AjouterActualite from './Components/Actualite/AjouterActualite';
-import './App.css';
+
+import Accueil from './vue/Accueil';
+import Login from './vue/Login';
+import { PlanningProvider } from './Context/PlanningContext';
 
 import './App.css';
 
 function App() {
+  const isLoggedIn = localStorage.getItem('loggedIn');
+
   return (
     <PlanningProvider>
       <Router>
         <div className="App">
+          {isLoggedIn && (
+            <nav>
+              <Link to="/">Home</Link>
+              <Link to="/etudiant">Étudiants</Link>
+              <Link to="/enseignants">Enseignants</Link>
+              <Link to="/classes">Classes</Link>
+              <Link to="/actualite">Actualités</Link>
+            </nav>
+          )}
           <Routes>
-            <Route path="/" element={<Accueil />} />
+            <Route path="/" element={isLoggedIn ? <Navigate to="/accueil" /> : <Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/accueil" element={<Accueil />} />
             <Route path="/etudiant" element={<ListeEtudiants />} />
             <Route path="/etudiant/:id" element={<DetailEtudiants />} />
             <Route path="/etudiant/ajouter" element={<AjouterEtudiant />} />
@@ -40,13 +54,8 @@ function App() {
             <Route path="/classes/:id/ajouter-cours" element={<AjouterCours />} />
             <Route path="/actualite" element={<ListeActualites />} />
             <Route path="/actualite/:id" element={<ActualiteDetail />} />
-            <Route path="/add-actualite"  element ={<AjouterActualite/>}/>
+            <Route path="/add-actualite" element={<AjouterActualite />} />
           </Routes>
-
-          <nav>
-            <Link to="/">Home</Link>
-          </nav>
-
         </div>
       </Router>
     </PlanningProvider>
