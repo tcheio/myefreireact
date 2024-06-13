@@ -1,19 +1,12 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import classes from '../../Données/Classes';
 import etudiants from '../../Données/Etudiant';
 
 const ClasseDetail = () => {
   const { id } = useParams();
-  const classeId = parseInt(id, 10);
-
-  console.log("Classe ID from useParams:", classeId);
-  
-  const classe = classes.find(classe => classe.id === classeId);
-  const elevesInClasse = etudiants.filter(eleve => eleve.classesId === classeId);
-
-  console.log("Classe trouvée:", classe);
-  console.log("Étudiants dans la classe:", elevesInClasse);
+  const classe = classes.find(classe => classe.id === parseInt(id, 10));
+  const elevesInClasse = etudiants.filter(eleve => eleve.classesId === parseInt(id, 10));
 
   if (!classe) {
     return <div>Classe non trouvée</div>;
@@ -31,6 +24,9 @@ const ClasseDetail = () => {
           </li>
         ))}
       </ul>
+      <Link to={`/classe/${id}/planning`}>
+        <button>Voir le planning</button>
+      </Link>
     </div>
   );
 };
