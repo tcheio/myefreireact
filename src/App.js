@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, Link, useLocation } from 'react-router-dom';
 import ListeEnseignants from './Components/Enseignants/ListeEnseignants';
 import EnseignantDetail from './Components/Enseignants/EnseignantDetail';
 import AjouterEnseignant from './Components/Enseignants/AjouterEnseignant';
@@ -21,6 +21,28 @@ import { PlanningProvider } from './Context/PlanningContext';
 
 import './App.css';
 
+const Navbar = () => {
+  const location = useLocation();
+  const isLoggedIn = localStorage.getItem('loggedIn');
+  
+  // Don't show navbar on login page
+  if (location.pathname === '/login' || location.pathname === '/') {
+    return null;
+  }
+
+  return (
+    isLoggedIn && (
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/etudiant">Étudiants</Link>
+        <Link to="/enseignants">Enseignants</Link>
+        <Link to="/classes">Classes</Link>
+        <Link to="/actualite">Actualités</Link>
+      </nav>
+    )
+  );
+};
+
 function App() {
   const isLoggedIn = localStorage.getItem('loggedIn');
 
@@ -28,15 +50,7 @@ function App() {
     <PlanningProvider>
       <Router>
         <div className="App">
-          {isLoggedIn && (
-            <nav>
-              <Link to="/">Home</Link>
-              <Link to="/etudiant">Étudiants</Link>
-              <Link to="/enseignants">Enseignants</Link>
-              <Link to="/classes">Classes</Link>
-              <Link to="/actualite">Actualités</Link>
-            </nav>
-          )}
+          <Navbar />
           <Routes>
             <Route path="/" element={isLoggedIn ? <Navigate to="/accueil" /> : <Login />} />
             <Route path="/login" element={<Login />} />
