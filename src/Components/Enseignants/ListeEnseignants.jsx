@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import enseignantsData from '../../Données/Enseignant';
+import '../../style/Profil.css';
+import EnseignantCard from './CarteEnseignant';
 
 const ListeEnseignant = () => {
   const [selectedMatiere, setSelectedMatiere] = useState('');
@@ -37,16 +39,16 @@ const ListeEnseignant = () => {
         ))}
       </select>
       <div className="grid">
-      {filteredEnseignants.map((enseignant, index) => (
-        <div key={index} className="card">
-          <Link to={`/enseignants/${index}`}><p><strong>{enseignant.prenom} {enseignant.nom}</strong></p></Link>
-          <p>Âge : {enseignant.age} ans</p>
-          <p>Matière : {enseignant.matiere}</p>
-          <button onClick={() => supprimerEnseignant(index)}>Supprimer</button>
-        </div>
-      ))}
+        {filteredEnseignants.map((enseignant, index) => (
+          <EnseignantCard
+            key={index}
+            enseignant={enseignant}
+            index={index}
+            supprimerEnseignant={supprimerEnseignant}
+          />
+        ))}
+      </div>
     </div>
-  </div>
   );
 };
 

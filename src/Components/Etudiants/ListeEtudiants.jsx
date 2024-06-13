@@ -3,6 +3,7 @@ import etudiantsData from '../../Données/Etudiant';
 import classesIndex from '../../Données/Classes';
 import { Link } from 'react-router-dom';
 import '../../style/Profil.css';
+import EtudiantCard from './CarteEtudiant';
 
 const ListeEtudiants = () => {
   const [classeSelectionnee, setClasseSelectionnee] = useState('Classes');
@@ -46,12 +47,13 @@ const ListeEtudiants = () => {
       </select>
       <div className="grid">
         {etudiantsFiltres.map((etudiant, index) => (
-          <div key={index} className="card">
-            <Link to={`/etudiant/${index}`}><p><strong>{etudiant.prenom} {etudiant.nom}</strong></p></Link>
-            <p>Âge : {etudiant.age} ans</p>
-            <p>Classe : {getClasseNom(etudiant.classesId)}</p>
-            <button onClick={() => supprimerEtudiant(index)}>Supprimer</button>
-          </div>
+          <EtudiantCard
+            key={index}
+            etudiant={etudiant}
+            index={index}
+            supprimerEtudiant={supprimerEtudiant}
+            getClasseNom={getClasseNom}
+          />
         ))}
       </div>
     </div>
