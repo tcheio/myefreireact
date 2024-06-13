@@ -13,6 +13,10 @@ import ClasseDetail from './Components/Classes/ClasseDetail';
 import ClassePlanning from './Components/Classes/ClassesPlanning';
 import AjouterCours from './Components/Classes/AjouterCours';
 import { PlanningProvider } from './Context/PlanningContext';
+import ListeActualites from './Components/Actualite/ListeActualites';
+import ActualiteDetail from './Components/Actualite/ActualiteDetail';
+import AjouterActualite from './Components/Actualite/AjouterActualite';
+import './App.css';
 
 import './App.css';
 
@@ -34,6 +38,9 @@ function App() {
             <Route path="/classes/:id" element={<ClasseDetail />} />
             <Route path="/classes/:id/planning" element={<ClassePlanning />} />
             <Route path="/classes/:id/ajouter-cours" element={<AjouterCours />} />
+            <Route path="/actualite" element={<ListeActualites />} />
+            <Route path="/actualite/:id" element={<ActualiteDetail />} />
+            <Route path="/add-actualite"  element ={<AjouterActualite/>}/>
           </Routes>
 
           <nav>
