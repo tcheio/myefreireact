@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import planningsData from '../../Données/Planning';
+import { PlanningContext } from '../../Context/PlanningContext';
 
 const AjouterCours = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [plannings, setPlannings] = useState(planningsData);
+  const { updatePlanning } = useContext(PlanningContext);
   const [newCourse, setNewCourse] = useState({ jour: '', cours: '', heure: '' });
 
   const handleInputChange = (e) => {
@@ -15,17 +15,7 @@ const AjouterCours = () => {
 
   const handleAddCourse = (e) => {
     e.preventDefault();
-    const updatedPlannings = plannings.map(planning => {
-      if (planning.classeId === parseInt(id, 10)) {
-        return {
-          ...planning,
-          planning: [...planning.planning, newCourse]
-        };
-      }
-      return planning;
-    });
-
-    setPlannings(updatedPlannings);
+    updatePlanning(parseInt(id, 10), newCourse);
     setNewCourse({ jour: '', cours: '', heure: '' });
     navigate(`/classe/${id}/planning`);
   };

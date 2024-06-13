@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import planningsData from '../../Données/Planning';
+import { PlanningContext } from '../../Context/PlanningContext';
 
 const ClassePlanning = () => {
   const { id } = useParams();
-  const planningClasse = planningsData.find(planning => planning.classeId === parseInt(id, 10));
+  const { plannings } = useContext(PlanningContext);
+  const planningClasse = plannings.find(planning => planning.classeId === parseInt(id, 10));
 
   return (
     <div className="ClassePlanning">
