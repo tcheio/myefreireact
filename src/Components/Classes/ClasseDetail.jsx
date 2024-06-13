@@ -24,7 +24,7 @@ const ClasseDetail = () => {
           </li>
         ))}
       </ul>
-      <Link to={`/classe/${id}/planning`}>
+      <Link to={`/classes/${id}/planning`}>
         <button>Voir le planning</button>
       </Link>
     </div>

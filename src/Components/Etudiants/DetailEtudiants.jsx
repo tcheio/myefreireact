@@ -40,7 +40,7 @@ const DetailEtudiants = () => {
         <p>Aucune note disponible</p>
       )}
 
-      <Link to={`/add-note/${id}`}>
+      <Link to={`/etudiant/${id}/ajouter-note`}>
         <button>Ajouter une note</button>
       </Link>
     </div>

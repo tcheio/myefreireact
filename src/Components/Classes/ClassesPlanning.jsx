@@ -21,7 +21,7 @@ const ClassePlanning = () => {
       ) : (
         <p>Pas de planning disponible pour cette classe.</p>
       )}
-      <Link to={`/classe/${id}/ajouter-cours`}>
+      <Link to={`/classes/${id}/ajouter-cours`}>
         <button>Ajouter un cours</button>
       </Link>
     </div>

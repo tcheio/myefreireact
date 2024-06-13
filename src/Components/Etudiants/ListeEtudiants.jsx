@@ -48,7 +48,7 @@ const ListeEtudiants = () => {
           <button onClick={() => supprimerEtudiant(index)}>Supprimer</button>
         </div>
       ))}
-      <Link to="/add-etudiant">
+      <Link to="/etudiant/ajouter">
         <button>Ajouter un étudiant</button>
       </Link>
     </div>

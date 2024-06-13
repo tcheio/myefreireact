@@ -17,7 +17,7 @@ const AjouterCours = () => {
     e.preventDefault();
     updatePlanning(parseInt(id, 10), newCourse);
     setNewCourse({ jour: '', cours: '', heure: '' });
-    navigate(`/classe/${id}/planning`);
+    navigate(`/classes/${id}/planning`);
   };
 
   return (
@@ -59,7 +59,7 @@ const AjouterCours = () => {
         </div>
         <button type="submit">Ajouter</button>
       </form>
-      <Link to={`/classe/${id}/planning`}>
+      <Link to={`/classes/${id}/planning`}>
         <button>Retour au planning</button>
       </Link>
     </div>

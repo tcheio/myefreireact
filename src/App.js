@@ -31,9 +31,9 @@ function App() {
             <Route path="/etudiant/:id" element={<DetailEtudiants />} />
             <Route path="/etudiant/ajouter" element={<AjouterEtudiant />} />
             <Route path="/etudiant/:id/ajouter-note" element={<AjouterNote />} />
-            <Route path="/enseignant" element={<ListeEnseignants />} />
-            <Route path="/enseignant/:id" element={<EnseignantDetail />} />
-            <Route path="/enseignant/ajouter" element={<AjouterEnseignant />} />
+            <Route path="/enseignants" element={<ListeEnseignants />} />
+            <Route path="/enseignants/:id" element={<EnseignantDetail />} />
+            <Route path="/enseignants/ajouter" element={<AjouterEnseignant />} />
             <Route path="/classes" element={<ListeClasses />} />
             <Route path="/classes/:id" element={<ClasseDetail />} />
             <Route path="/classes/:id/planning" element={<ClassePlanning />} />

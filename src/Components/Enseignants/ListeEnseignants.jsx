@@ -42,7 +42,7 @@ const ListeEnseignant = () => {
           <button onClick={() => supprimerEnseignant(index)}>Supprimer</button>
         </div>
       ))}
-      <Link to="/add-enseignant">
+      <Link to="/enseignants/ajouter">
         <button>Ajouter un enseignant</button>
       </Link>
     </div>
