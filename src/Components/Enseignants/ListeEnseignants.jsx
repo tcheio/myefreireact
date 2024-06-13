@@ -23,29 +23,30 @@ const ListeEnseignant = () => {
   };
 
   return (
-    <div className="TeachersList">
+    <div className="liste">
       <h2>Liste des enseignants</h2>
-      <div>
-        <label htmlFor="matiere-select">Filtrer par matière: </label>
-        <select id="matiere-select" value={selectedMatiere} onChange={handleMatiereChange}>
-          <option value="">Toutes les matières</option>
-          {uniqueMatieres.map((matiere, index) => (
-            <option key={index} value={matiere}>{matiere}</option>
-          ))}
-        </select>
-      </div>
+      <Link to="/enseignants/ajouter">
+        <button className="Boutonadd">Ajouter un enseignant</button>
+      </Link>
+
+      <label htmlFor="matiere-select">Filtrer par matière: </label>
+      <select id="matiere-select" value={selectedMatiere} onChange={handleMatiereChange}>
+        <option value="">Toutes les matières</option>
+        {uniqueMatieres.map((matiere, index) => (
+          <option key={index} value={matiere}>{matiere}</option>
+        ))}
+      </select>
+      <div className="grid">
       {filteredEnseignants.map((enseignant, index) => (
-        <div key={index} className="etudiantCard">
+        <div key={index} className="card">
           <Link to={`/enseignants/${index}`}><p><strong>{enseignant.prenom} {enseignant.nom}</strong></p></Link>
           <p>Âge : {enseignant.age} ans</p>
           <p>Matière : {enseignant.matiere}</p>
           <button onClick={() => supprimerEnseignant(index)}>Supprimer</button>
         </div>
       ))}
-      <Link to="/enseignants/ajouter">
-        <button>Ajouter un enseignant</button>
-      </Link>
     </div>
+  </div>
   );
 };
 
