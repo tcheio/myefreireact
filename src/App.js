@@ -10,6 +10,9 @@ import AjouterEtudiant from './Components/Etudiants/AjouterEtudiant';
 import AjouterNote from './Components/Etudiants/AjouterNote';
 import ListeClasses from './Components/Classes/ListeClasses';
 import ClasseDetail from './Components/Classes/ClasseDetail';
+import ClassePlanning from './Components/Classes/ClassesPlanning';
+import AjouterCours from './Components/Classes/AjouterCours';
+
 import './App.css';
 
 
@@ -29,6 +32,8 @@ function App() {
             <Route path="/add-enseignant" element={<AjouterEnseignant />} />
             <Route path="/classes" element={<ListeClasses />} />
             <Route path="/classes/:id" element={<ClasseDetail />} />
+            <Route path="/classe/:id/planning" element={<ClassePlanning />} />
+            <Route path="/classe/:id/ajouter-cours" element={<AjouterCours />} />
           </Routes>
           <nav>
             <Link to="/">Home</Link>
