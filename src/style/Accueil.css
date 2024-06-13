@@ -1,0 +1,89 @@
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Space between left, center, and right sections */
+    align-items: center;
+    background-color: #163767; 
+    padding: 5px 20px;
+    box-shadow: 0 2px 4px rgba(174, 174, 174, 0.1); 
+}
+
+.navbar-left,
+.navbar-center,
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-center {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 10px; 
+    transition: color 0.5s ease;
+}
+
+.navbar a:hover {
+    color: #e7873b; 
+}
+
+.navbar a:not(:last-child) {
+    margin-right: 20px; 
+}
+
+.logo {
+    height: 40px; 
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.logout-btn {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #e7873b;
+    color: white;
+}
+
+.Accueil{
+    margin-top: 50px;
+}
+
+.buttons-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    grid-column-gap: 0px;
+    row-gap: 40px; 
+    justify-items: center; 
+    margin-top: 100px; 
+    margin: 60px 120px;
+  }
+  
+  .btn {
+    padding: 20px 40px;
+    background-color: #163767;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px; 
+    transition: background-color 0.3s ease;
+    width: 600px;
+    height: 200px; 
+  }
+  
+  .btn:hover {
+    background-color: #e7873b;
+  }
+  
