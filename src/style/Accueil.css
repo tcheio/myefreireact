@@ -71,7 +71,7 @@
     margin: 60px 120px;
   }
   
-  .btn {
+.btn {
     padding: 20px 40px;
     background-color: #163767;
     color: white;
@@ -81,9 +81,9 @@
     transition: background-color 0.3s ease;
     width: 600px;
     height: 200px; 
-  }
+}
   
-  .btn:hover {
+.btn:hover {
     background-color: #e7873b;
-  }
+}
   

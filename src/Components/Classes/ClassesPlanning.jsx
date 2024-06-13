@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { PlanningContext } from '../../Context/PlanningContext';
+import '../../style/Planning.css';
 
 const ClassePlanning = () => {
   const { id } = useParams();
@@ -14,7 +15,8 @@ const ClassePlanning = () => {
         <ul>
           {planningClasse.planning.map((cours, index) => (
             <li key={index}>
-              {cours.jour} - {cours.cours} : {cours.heure}
+              <span>{cours.jour} - {cours.cours}</span>
+              <span>{cours.heure}</span>
             </li>
           ))}
         </ul>

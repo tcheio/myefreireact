@@ -1,17 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import classes from '../../Données/Classes';
+import '../../style/Profil.css';
 
 const ListeClasses = () => {
+  const navigate = useNavigate();
+
+  const handleButtonClick = (id) => {
+    navigate(`/classes/${id}`);
+  };
+
   return (
-    <div className="ClassesList">
+    <div className="liste">
       <h2>Liste des classes</h2>
       <ul>
         {classes.map((classe, index) => (
           <li key={index}>
-            <Link to={`/classes/${classe.id}`}>
+            <button className="Boutonadd" onClick={() => handleButtonClick(classe.id)}>
               {classe.nom}
-            </Link>
+            </button>
           </li>
         ))}
       </ul>
