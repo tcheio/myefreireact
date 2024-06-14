@@ -10,7 +10,7 @@ const Accueil = () => {
         <Link to="/etudiant">
           <button className="btn">Gérer la liste des Etudiants</button>
         </Link>
-        <Link to="/enseignant">
+        <Link to="/enseignants">
           <button className="btn">Gérer la liste des Enseignants</button>
         </Link>
         <Link to="/classes">
