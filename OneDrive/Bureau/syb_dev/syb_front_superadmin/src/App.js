@@ -8,6 +8,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AddSectorPage from './pages/AddSectorPage';
 import AddCategoryPage from './pages/AddCategoryPage';
 import AddCompanyPage from './pages/AddCompanyPage'; // ✅ Nouvelle page
+import AddInsurerPage from './pages/AddInsurerPage';
+import AddInsurancePage from './pages/AddInsurancePage';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -59,7 +61,9 @@ const App = () => {
                         <Route path="/" element={<Dashboard />} />
                         <Route path="/ajouter-secteur" element={<AddSectorPage />} />
                         <Route path="/ajouter-categorie" element={<AddCategoryPage />} />
-                        <Route path="/ajouter-entreprise" element={<AddCompanyPage />} /> {/* ✅ Ajout de la nouvelle route */}
+                        <Route path="/ajouter-entreprise" element={<AddCompanyPage />} />
+                        <Route path="/ajouter-assureur" element={<AddInsurerPage />} />
+                        <Route path="/ajouter-assurance" element={<AddInsurancePage />} /> 
                     </Route>
                 </Route>
                 <Route path="*" element={<Navigate to="/" />} />
