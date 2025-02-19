@@ -14,6 +14,11 @@ const AddInsurancePage = () => {
     const [statuses, setStatuses] = useState([]);
     const [sectors, setSectors] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [advantages, setAdvantages] = useState([
+        { id: uuidv4(), title: "", description: "" }
+    ]);
+    
+    const [newAdvantage, setNewAdvantage] = useState({ title: "", description: "" });
     const [formData, setFormData] = useState({
         engagement: "",
         name: "",
@@ -73,7 +78,15 @@ const AddInsurancePage = () => {
             setInsurances([]);
         }
     };
+    const handleChangeAdvantage = (index, field, value) => {
+        setAdvantages(prevAdvantages =>
+            prevAdvantages.map((adv, i) =>
+                i === index ? { ...adv, [field]: value } : adv
+            )
+        );
+    };
     
+
 
     const fetchInsurers = async () => {
         try {
@@ -133,14 +146,12 @@ const AddInsurancePage = () => {
         try {
             const formDataToSend = new FormData();
     
-            // Ajout de toutes les valeurs texte
             Object.keys(formData).forEach((key) => {
                 if (formData[key] !== "" && formData[key] !== null && key !== "pdf_notice" && key !== "pdf_ipid") {
                     formDataToSend.append(key, formData[key]);
                 }
             });
     
-            // Ajout des fichiers PDF
             if (formData.pdf_notice) {
                 formDataToSend.append("pdf_notice", formData.pdf_notice);
             }
@@ -148,31 +159,48 @@ const AddInsurancePage = () => {
                 formDataToSend.append("pdf_ipid", formData.pdf_ipid);
             }
     
+            formDataToSend.append("advantages", JSON.stringify(advantages.length ? advantages : []));
+    
             const response = await fetch(
                 selectedInsuranceId
                     ? `http://localhost:3000/api/insurances/${selectedInsuranceId}`
                     : 'http://localhost:3000/api/insurances',
                 {
                     method: selectedInsuranceId ? 'PUT' : 'POST',
-                    body: formDataToSend // Ne pas définir `Content-Type`, FormData le gère automatiquement
+                    body: formDataToSend
                 }
             );
     
-            const result = await response.json();
-    
             if (!response.ok) {
-                throw new Error(result.error || `Erreur API: ${response.status}`);
+                throw new Error("Erreur lors de l'enregistrement");
             }
     
             setSuccess(selectedInsuranceId ? "Assurance mise à jour !" : "Assurance ajoutée !");
             resetForm();
             fetchInsurances();
+            
+            // 🛑 Scroller en haut de la page après l'ajout
+            window.scrollTo({ top: 0, behavior: "smooth" });
+    
         } catch (error) {
             setError(error.message);
         } finally {
             setLoading(false);
         }
     };
+    
+    
+
+    const handleAddAdvantage = () => {
+        setAdvantages([...advantages, { id: uuidv4(), title: "", description: "" }]);
+    };
+    
+
+    const handleRemoveAdvantage = (id) => {
+        setAdvantages(prevAdvantages => prevAdvantages.filter(adv => adv.id !== id));
+    };
+    
+    
     
     
 
@@ -218,15 +246,28 @@ const AddInsurancePage = () => {
             const data = await response.json();
             if (!data || !data.insurance) throw new Error("Données d'assurance invalides.");
     
+            const convertBase64ToBlobUrl = (base64String) => {
+                if (!base64String) return null;
+    
+                const byteCharacters = atob(base64String);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: "application/pdf" });
+                return URL.createObjectURL(blob);
+            };
+    
             setFormData({
                 engagement: data.insurance.engagement || "",
                 name: data.insurance.name || "",
                 price: data.insurance.price || "",
-                insurer_id: data.insurance.insurer?.id || "",
-                category_id: data.insurance.category?.id || "",
+                insurer_id: data.insurance.Insurer?.id || "",
+                category_id: data.insurance.Category?.id || "",
                 description: data.insurance.description || "",
-                sector_id: data.insurance.sector?.id || "",
-                status_id: data.insurance.status?.id || "",
+                sector_id: data.insurance.Sector?.id || "",
+                status_id: data.insurance.Status?.id || "",
                 price_bike_minimum: data.insurance.price_bike_minimum || "",
                 vol: data.insurance.vol || false,
                 tentative_vol: data.insurance.tentative_vol || false,
@@ -243,15 +284,47 @@ const AddInsurancePage = () => {
                 min_fr_dommages_materiels: data.insurance.min_fr_dommages_materiels || "",
                 min_fr_catastrophes_naturelles: data.insurance.min_fr_catastrophes_naturelles || "",
                 min_fr_catastrophes_technologiques: data.insurance.min_fr_catastrophes_technologiques || "",
-                pdf_notice: "",
-                pdf_ipid: ""
+                pdf_notice: convertBase64ToBlobUrl(data.insurance.pdf_notice),
+                pdf_ipid: convertBase64ToBlobUrl(data.insurance.pdf_ipid)
             });
     
             setSelectedInsuranceId(insuranceId);
+            fetchAdvantages(insuranceId);
         } catch (error) {
             setError(error.message);
         }
     };
+    
+    
+    
+
+    const fetchAdvantages = async (insuranceId) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/insurances/${insuranceId}/advantages`);
+            if (!response.ok) throw new Error("Erreur lors de la récupération des avantages.");
+    
+            const data = await response.json();
+            setAdvantages(data.advantages || []);
+        } catch (error) {
+            setAdvantages([]);
+        }
+    };
+
+    const openPdf = (base64Data) => {
+        if (!base64Data) return;
+    
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        window.open(url);
+    };
+    
+    
     
 
     return (
@@ -334,29 +407,143 @@ const AddInsurancePage = () => {
                         <TextField label="Min franchise dommages matériels (€)" fullWidth type="number" name="min_fr_dommages_materiels" value={formData.min_fr_dommages_materiels} onChange={handleChange} />
                         <TextField label="Min franchise catastrophes naturelles (€)" fullWidth type="number" name="min_fr_catastrophes_naturelles" value={formData.min_fr_catastrophes_naturelles} onChange={handleChange} />
                         <TextField label="Min franchise catastrophes technologiques (€)" fullWidth type="number" name="min_fr_catastrophes_technologiques" value={formData.min_fr_catastrophes_technologiques} onChange={handleChange} />
+                        {/* Section Avantages */}
+                        <Divider sx={{ mt: 3, mb: 2 }} />
+                        <Typography variant="h6">Avantages</Typography>
+
+                        {advantages.map((advantage, index) => (
+                            <Box key={advantage.id} sx={{ border: "1px solid #ddd", p: 2, borderRadius: 2, mb: 2 }}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            label="Titre de l'avantage"
+                                            fullWidth
+                                            value={advantage.title}
+                                            onChange={(e) => handleChangeAdvantage(index, "title", e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            label="Description"
+                                            fullWidth
+                                            multiline
+                                            rows={2}
+                                            value={advantage.description}
+                                            onChange={(e) => handleChangeAdvantage(index, "description", e.target.value)}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <IconButton onClick={() => handleRemoveAdvantage(advantage.id)} sx={{ mt: 1, float: 'right' }}>
+                                    <Delete color="error" />
+                                </IconButton>
+                            </Box>
+                        ))}
+
+                        <Button
+                            startIcon={<Add />}
+                            onClick={handleAddAdvantage}
+                            sx={{
+                                backgroundColor: "white",
+                                color: "black",
+                                border: "1px solid black",
+                                "&:hover": {
+                                    backgroundColor: "black",
+                                    color: "white",
+                                },
+                            }}
+                        >
+                            Ajouter un avantage
+                        </Button>
+
+                        {/* Affichage des fichiers PDF en mode modification */}
+                        {/* Affichage des fichiers PDF en mode édition */}
+                        <Box sx={{ mt: 3 }}>
+                            <Typography variant="subtitle1">Fichiers PDF existants :</Typography>
+
+                            {formData.pdf_notice && (
+                                <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
+                                    <Typography variant="body2">Notice actuelle :</Typography>
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        onClick={() => window.open(formData.pdf_notice, "_blank")}
+                                    >
+                                        Voir Notice PDF
+                                    </Button>
+                                </Box>
+                            )}
+
+                            {formData.pdf_ipid && (
+                                <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
+                                    <Typography variant="body2">IPID actuel :</Typography>
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        onClick={() => window.open(formData.pdf_ipid, "_blank")}
+                                    >
+                                        Voir IPID PDF
+                                    </Button>
+                                </Box>
+                            )}
+                        </Box>
+
 
                         {/* Upload des fichiers PDF */}
-                        <Box sx={{ mt: 2 }}>
-                            <Typography variant="subtitle1">Fichiers PDF</Typography>
-                            <TextField
-                                type="file"
-                                accept="application/pdf"
-                                onChange={(e) => setFormData({ ...formData, pdf_notice: e.target.files[0] })}
-                                fullWidth
-                                variant="outlined"
-                                label="Ajouter Notice PDF"
-                                InputLabelProps={{ shrink: true }}
-                                sx={{ mb: 2 }}
-                            />
-                            <TextField
-                                type="file"
-                                accept="application/pdf"
-                                onChange={(e) => setFormData({ ...formData, pdf_ipid: e.target.files[0] })}
-                                fullWidth
-                                variant="outlined"
-                                label="Ajouter IPID PDF"
-                                InputLabelProps={{ shrink: true }}
-                            />
+                        {/* Upload des fichiers PDF avec un meilleur espacement */}
+                        <Box sx={{ mt: 3 }}>
+                            <Typography variant="subtitle1">Télécharger un nouveau fichier PDF :</Typography>
+                            
+                            {/* Notice PDF Upload */}
+                            <Box sx={{ mt: 2 }}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                    sx={{
+                                        bgcolor: "#1976d2",
+                                        color: "white",
+                                        "&:hover": { bgcolor: "#1565c0" },
+                                    }}
+                                >
+                                    Choisir Notice PDF
+                                    <input
+                                        type="file"
+                                        hidden
+                                        accept="application/pdf"
+                                        onChange={(e) => setFormData({ ...formData, pdf_notice: e.target.files[0] })}
+                                    />
+                                </Button>
+                                {formData.pdf_notice && typeof formData.pdf_notice !== "string" && (
+                                    <Typography variant="body2" sx={{ mt: 1, color: "green" }}>
+                                        {formData.pdf_notice.name}
+                                    </Typography>
+                                )}
+                            </Box>
+
+                            {/* IPID PDF Upload */}
+                            <Box sx={{ mt: 2 }}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                    sx={{
+                                        bgcolor: "#1976d2",
+                                        color: "white",
+                                        "&:hover": { bgcolor: "#1565c0" },
+                                    }}
+                                >
+                                    Choisir IPID PDF
+                                    <input
+                                        type="file"
+                                        hidden
+                                        accept="application/pdf"
+                                        onChange={(e) => setFormData({ ...formData, pdf_ipid: e.target.files[0] })}
+                                    />
+                                </Button>
+                                {formData.pdf_ipid && typeof formData.pdf_ipid !== "string" && (
+                                    <Typography variant="body2" sx={{ mt: 1, color: "green" }}>
+                                        {formData.pdf_ipid.name}
+                                    </Typography>
+                                )}
+                            </Box>
                         </Box>
 
 
@@ -412,6 +599,7 @@ const AddInsurancePage = () => {
                     </Paper>
                 </Grid>
             </Grid>
+            
         </Container>
     );
 };
