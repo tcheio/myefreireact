@@ -202,6 +202,23 @@ const AddInsurancePage = () => {
     
     
     
+    const fetchCategoriesBySector = async (sectorId) => {
+        if (!sectorId) {
+            setCategories([]);
+            return;
+        }
+    
+        try {
+            const response = await fetch(`http://localhost:3000/api/categories/${sectorId}`);
+            if (!response.ok) throw new Error("Impossible de récupérer les catégories.");
+    
+            const data = await response.json();
+            setCategories(data.categories || []);
+        } catch (error) {
+            setError(error.message);
+            setCategories([]);
+        }
+    };
     
 
     const resetForm = () => {
@@ -310,18 +327,33 @@ const AddInsurancePage = () => {
         }
     };
 
-    const openPdf = (base64Data) => {
-        if (!base64Data) return;
-    
-        const byteCharacters = atob(base64Data);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
+    const fetchSectorByInsurer = async (insurerId) => {
+        if (!insurerId) {
+            setFormData((prevData) => ({ ...prevData, sector_id: "", category_id: "" }));
+            setSectors([]);
+            setCategories([]);
+            return;
         }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        window.open(url);
+    
+        try {
+            const response = await fetch(`http://localhost:3000/api/sectors/${insurerId}`);
+            if (!response.ok) throw new Error("Impossible de récupérer le secteur de cet assureur.");
+    
+            const data = await response.json();
+    
+            if (data.sectors.length > 0) {
+                const sectorId = data.sectors[0].id; // Supposons qu'un assureur a un seul secteur
+                setFormData((prevData) => ({ ...prevData, sector_id: sectorId, category_id: "" }));
+                fetchCategoriesBySector(sectorId); // Charge les catégories en fonction du secteur présélectionné
+            } else {
+                setFormData((prevData) => ({ ...prevData, sector_id: "", category_id: "" }));
+                setCategories([]);
+            }
+        } catch (error) {
+            setError(error.message);
+            setSectors([]);
+            setCategories([]);
+        }
     };
     
     
@@ -354,13 +386,23 @@ const AddInsurancePage = () => {
                         <TextField label="Engagement (mois)" fullWidth type="number" name="engagement" value={formData.engagement} onChange={handleChange} />
                         <TextField label="Nom de l'assurance" fullWidth name="name" value={formData.name} onChange={handleChange} />
                         <TextField label="Prix (€)" fullWidth type="number" name="price" value={formData.price} onChange={handleChange} />
-
                         <FormControl fullWidth>
                             <InputLabel>Assureur</InputLabel>
-                            <Select name="insurer_id" value={formData.insurer_id} onChange={handleChange}>
-                                {insurers.map(insurer => <MenuItem key={insurer.id} value={insurer.id}>{insurer.name}</MenuItem>)}
+                            <Select
+                                name="insurer_id"
+                                value={formData.insurer_id}
+                                onChange={(e) => {
+                                    handleChange(e); // Met à jour formData
+                                    fetchSectorByInsurer(e.target.value); // Récupère et définit automatiquement le secteur
+                                }}
+                            >
+                                {insurers.map(insurer => (
+                                    <MenuItem key={insurer.id} value={insurer.id}>{insurer.name}</MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
+
+
 
                         <FormControl fullWidth>
                             <InputLabel>Catégorie</InputLabel>
@@ -369,12 +411,22 @@ const AddInsurancePage = () => {
                             </Select>
                         </FormControl>
 
+
                         <TextField label="Description" fullWidth multiline rows={4} name="description" value={formData.description} onChange={handleChange} />
 
                         <FormControl fullWidth>
                             <InputLabel>Secteur</InputLabel>
-                            <Select name="sector_id" value={formData.sector_id} onChange={handleChange}>
-                                {sectors.map(sector => <MenuItem key={sector.id} value={sector.id}>{sector.name}</MenuItem>)}
+                            <Select
+                                name="sector_id"
+                                value={formData.sector_id}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    fetchCategoriesBySector(e.target.value); // Charge les catégories liées au secteur sélectionné
+                                }}
+                            >
+                                {sectors.map(sector => (
+                                    <MenuItem key={sector.id} value={sector.id}>{sector.name}</MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
 
