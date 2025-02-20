@@ -383,17 +383,15 @@ const AddInsurancePage = () => {
                         </Box>
                         <Divider sx={{ mb: 2 }} />
                         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <TextField label="Engagement (mois)" fullWidth type="number" name="engagement" value={formData.engagement} onChange={handleChange} />
                         <TextField label="Nom de l'assurance" fullWidth name="name" value={formData.name} onChange={handleChange} />
-                        <TextField label="Prix (€)" fullWidth type="number" name="price" value={formData.price} onChange={handleChange} />
                         <FormControl fullWidth>
                             <InputLabel>Assureur</InputLabel>
                             <Select
                                 name="insurer_id"
                                 value={formData.insurer_id}
                                 onChange={(e) => {
-                                    handleChange(e); // Met à jour formData
-                                    fetchSectorByInsurer(e.target.value); // Récupère et définit automatiquement le secteur
+                                    handleChange(e); 
+                                    fetchSectorByInsurer(e.target.value); 
                                 }}
                             >
                                 {insurers.map(insurer => (
@@ -401,44 +399,28 @@ const AddInsurancePage = () => {
                                 ))}
                             </Select>
                         </FormControl>
-
-
-
-                        <FormControl fullWidth>
+                        <TextField
+                            label="Secteur"
+                            fullWidth
+                            value={sectors.find(s => s.id === formData.sector_id)?.name || "Aucun"}
+                            InputProps={{ readOnly: true }}
+                        />        
+                         <FormControl fullWidth>
                             <InputLabel>Catégorie</InputLabel>
                             <Select name="category_id" value={formData.category_id} onChange={handleChange}>
                                 {categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
                             </Select>
-                        </FormControl>
-
-
+                        </FormControl>    
+                        <TextField label="Prix de l'assurance (PLN)" fullWidth type="number" name="price" value={formData.price} onChange={handleChange} />
                         <TextField label="Description" fullWidth multiline rows={4} name="description" value={formData.description} onChange={handleChange} />
-
-                        <FormControl fullWidth>
-                            <InputLabel>Secteur</InputLabel>
-                            <Select
-                                name="sector_id"
-                                value={formData.sector_id}
-                                onChange={(e) => {
-                                    handleChange(e);
-                                    fetchCategoriesBySector(e.target.value); // Charge les catégories liées au secteur sélectionné
-                                }}
-                            >
-                                {sectors.map(sector => (
-                                    <MenuItem key={sector.id} value={sector.id}>{sector.name}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-
                         <FormControl fullWidth>
                             <InputLabel>Statut</InputLabel>
                             <Select name="status_id" value={formData.status_id} onChange={handleChange}>
                                 {statuses.map(status => <MenuItem key={status.id} value={status.id}>{status.name}</MenuItem>)}
                             </Select>
                         </FormControl>
-
-                        <TextField label="Prix minimum du vélo (€)" fullWidth type="number" name="price_bike_minimum" value={formData.price_bike_minimum} onChange={handleChange} />
-
+                        <TextField label="Engagement (mois)" fullWidth type="number" name="engagement" value={formData.engagement} onChange={handleChange} />
+                        <TextField label="Prix minimum du vélo (PLN)" fullWidth type="number" name="price_bike_minimum" value={formData.price_bike_minimum} onChange={handleChange} />
                         {/* Cases à cocher pour les garanties */}
                         <FormControlLabel control={<Checkbox name="vol" checked={formData.vol} onChange={handleChange} />} label="Vol couvert" />
                         <FormControlLabel control={<Checkbox name="tentative_vol" checked={formData.tentative_vol} onChange={handleChange} />} label="Tentative de vol" />

@@ -10,6 +10,7 @@ import AddCategoryPage from './pages/AddCategoryPage';
 import AddCompanyPage from './pages/AddCompanyPage'; // ✅ Nouvelle page
 import AddInsurerPage from './pages/AddInsurerPage';
 import AddInsurancePage from './pages/AddInsurancePage';
+import AddUserPage from './pages/AddUserPage';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -64,6 +65,7 @@ const App = () => {
                         <Route path="/ajouter-entreprise" element={<AddCompanyPage />} />
                         <Route path="/ajouter-assureur" element={<AddInsurerPage />} />
                         <Route path="/ajouter-assurance" element={<AddInsurancePage />} /> 
+                        <Route path="/ajouter-utilisateur" element={<AddUserPage />} /> 
                     </Route>
                 </Route>
                 <Route path="*" element={<Navigate to="/" />} />
