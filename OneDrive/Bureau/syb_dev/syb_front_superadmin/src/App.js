@@ -11,6 +11,7 @@ import AddCompanyPage from './pages/AddCompanyPage'; // ✅ Nouvelle page
 import AddInsurerPage from './pages/AddInsurerPage';
 import AddInsurancePage from './pages/AddInsurancePage';
 import AddUserPage from './pages/AddUserPage';
+import CompaniesPage from './pages/CompaniesPage';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -65,7 +66,8 @@ const App = () => {
                         <Route path="/ajouter-entreprise" element={<AddCompanyPage />} />
                         <Route path="/ajouter-assureur" element={<AddInsurerPage />} />
                         <Route path="/ajouter-assurance" element={<AddInsurancePage />} /> 
-                        <Route path="/ajouter-utilisateur" element={<AddUserPage />} /> 
+                        <Route path="/ajouter-utilisateur" element={<AddUserPage />} />  
+                        <Route path="/entreprises" element={<CompaniesPage />} />
                     </Route>
                 </Route>
                 <Route path="*" element={<Navigate to="/" />} />

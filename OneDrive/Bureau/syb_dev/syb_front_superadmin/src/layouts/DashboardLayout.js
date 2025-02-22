@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography, Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
-import { Menu as MenuIcon, Business, People, Store, Category, LocalOffer, Home, Logout, Add, ChevronLeft, ChevronRight, PersonAdd, DomainAdd, Category as CategoryIcon, Apartment, Work, GroupAdd } from '@mui/icons-material';
+import { Menu as MenuIcon, Business, People, Store, Category, LocalOffer, Home, Logout, Add, ChevronLeft, ChevronRight, PersonAdd, DomainAdd, Category as CategoryIcon, PersonAddAlt1, Apartment, Work, GroupAdd } from '@mui/icons-material';
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import DomainAddIcon from '@mui/icons-material/DomainAdd';
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
+import DataSaverOnIcon from '@mui/icons-material/DataSaverOn';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 70;
@@ -13,22 +22,19 @@ const DashboardLayout = ({ user, onLogout }) => {
     const navigate = useNavigate();
 
     const menuItems = [
-        { text: 'Dashboard', icon: <Home color="primary" />, path: '/' },
-        { text: 'Assurances', icon: <LocalOffer color="secondary" />, path: '/assurances' },
-        { text: 'Assureurs', icon: <Business color="action" />, path: '/assureurs' },
-        { text: 'Entreprises', icon: <Store color="success" />, path: '/entreprises' },
-        { text: 'Utilisateurs', icon: <People color="error" />, path: '/utilisateurs' },
-        { text: 'Clients', icon: <People color="disabled" />, path: '/clients' },
-        { text: 'Ventes', icon: <CategoryIcon color="warning" />, path: '/ventes' },
+        { text: 'Dashboard', icon: <DashboardIcon color="info" />, path: '/' },
+        { text: 'Entreprises', icon: <Business color="info" />, path: '/entreprises' },
+        { text: 'Transactions', icon: <AccountBalanceIcon color="info" />, path: '/transactions' },
+        { text: 'Clients', icon: <PeopleAltIcon color="info" />, path: '/clients' },
     ];
 
     const addItems = [
-        { text: 'Ajouter Assurance', icon: <Add color="secondary" />, path: '/ajouter-assurance' },
-        { text: 'Ajouter Assureur', icon: <DomainAdd color="action" />, path: '/ajouter-assureur' },
-        { text: 'Ajouter Catégorie', icon: <CategoryIcon color="warning" />, path: '/ajouter-categorie' },
-        { text: 'Ajouter Entreprise', icon: <Apartment color="success" />, path: '/ajouter-entreprise' },
-        { text: 'Ajouter Secteur', icon: <Work color="info" />, path: '/ajouter-secteur' },
-        { text: 'Ajouter Utilisateur', icon: <PersonAdd color="error" />, path: '/ajouter-utilisateur' },
+        { text: 'Ajouter Secteur', icon: <CreateNewFolderIcon color="info" />, path: '/ajouter-secteur' },
+        { text: 'Ajouter Catégorie', icon: <LibraryAddIcon color="info" />, path: '/ajouter-categorie' },
+        { text: 'Ajouter Assureur', icon: <DataSaverOnIcon color="info" />, path: '/ajouter-assureur' },
+        { text: 'Ajouter Assurance', icon: <AddModeratorIcon color="info" />, path: '/ajouter-assurance' },
+        { text: 'Ajouter Entreprise', icon: <DomainAddIcon color="info" />, path: '/ajouter-entreprise' },
+        { text: 'Ajouter Utilisateur', icon: <PersonAddAlt1 color="info" />, path: '/ajouter-utilisateur' },
     ];
 
     const handleLogout = async () => {
@@ -89,14 +95,14 @@ const DashboardLayout = ({ user, onLogout }) => {
                 <Divider />
                 
                 <List>
-                    {menuItems.map((item) => (
-                        <Tooltip title={collapsed ? item.text : ""} placement="right">
-                            <ListItem key={item.text} onClick={() => navigate(item.path)} sx={{ cursor: "pointer" }}>
-                                <ListItemIcon>{item.icon}</ListItemIcon>
-                                {!collapsed && <ListItemText primary={item.text} />}
-                            </ListItem>
-                        </Tooltip>
-                    ))} 
+                {menuItems.map((item, index) => (
+                    <Tooltip key={index} title={collapsed ? item.text : ""} placement="right"> {/* ✅ Ajout du `key` */}
+                        <ListItem key={item.text} onClick={() => navigate(item.path)} sx={{ cursor: "pointer" }}>
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        {!collapsed && <ListItemText primary={item.text} />}
+                        </ListItem>
+                    </Tooltip>
+                    ))}
                 </List>
 
                 <Divider />
@@ -106,13 +112,13 @@ const DashboardLayout = ({ user, onLogout }) => {
                         <ListItemIcon><Add /></ListItemIcon>
                         {!collapsed && <ListItemText primary="Ajouts" />}
                     </ListItem>
-                    {addItems.map((item) => (
-                        <Tooltip title={collapsed ? item.text : ""} placement="right">
-                            <ListItem key={item.text} onClick={() => navigate(item.path)} sx={{ cursor: "pointer" }}>
-                                <ListItemIcon>{item.icon}</ListItemIcon>
-                                {!collapsed && <ListItemText primary={item.text} />}
-                            </ListItem>
-                        </Tooltip>
+                    {addItems.map((item, index) => (
+                    <Tooltip key={index} title={collapsed ? item.text : ""} placement="right"> {/* ✅ Ajout du `key` */}
+                        <ListItem key={item.text} onClick={() => navigate(item.path)} sx={{ cursor: "pointer" }}>
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        {!collapsed && <ListItemText primary={item.text} />}
+                        </ListItem>
+                    </Tooltip>
                     ))}
                 </List>
             </Drawer>

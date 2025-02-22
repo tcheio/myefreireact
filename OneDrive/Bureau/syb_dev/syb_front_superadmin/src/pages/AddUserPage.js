@@ -73,8 +73,6 @@ const AddUserPage = () => {
             if (!response.ok) throw new Error("Erreur lors du chargement des managers");
             const data = await response.json();
     
-            console.log("👤 Managers récupérés :", data.users); // Ajout d'un log
-    
             setManagers(data.users.filter(user => user.role === 'manager'));
         } catch (error) {
             setError("Erreur lors du chargement des managers");
@@ -110,8 +108,6 @@ const AddUserPage = () => {
                 setEmail(data.user.email);
                 setRole(data.user.role);
     
-                console.log("🔍 Utilisateur récupéré :", data.user); // 🔎 DEBUG pour voir les données reçues
-    
                 // 🔹 Cas où l'utilisateur est un **VENDEUR**
                 if (data.user.role === "vendor") {
                     const manager = data.user.Managers?.[0] || null;
@@ -121,36 +117,26 @@ const AddUserPage = () => {
                     const managedSites = manager?.ManagedSites || [];
                     setSiteIds(managedSites.map(site => site.id));
     
-                    console.log("📌 Sites du manager :", managedSites);
-    
                     // ✅ Récupération de l'**entreprise** du premier site géré par le manager
                     const company = managedSites.length > 0 ? managedSites[0].Company : null;
                     setCompanyId(company?.id || '');
-    
-                    console.log("🏢 Entreprise récupérée :", company);
                 }
     
                 // 🔹 Cas où l'utilisateur est un **MANAGER**
                 if (data.user.role === "manager") {
                     setSiteIds(data.user.ManagedSites?.map(site => site.id) || []);
     
-                    console.log("📌 Sites gérés par le manager :", data.user.ManagedSites);
-    
                     // ✅ Récupération de l'**entreprise** liée au premier site géré
                     const company = data.user.ManagedSites?.[0]?.Company || null;
                     setCompanyId(company?.id || '');
     
-                    console.log("🏢 Entreprise du manager :", company);
-    
                     // ✅ Récupération des membres de l'équipe (vendeurs gérés par ce manager)
                     setTeamMembers(data.user.ManagedVendors || []);
-                    console.log("👥 Membres de l'équipe :", data.user.ManagedVendors);
                 }
     
                 // 🔹 Cas où l'utilisateur est un **ADMIN**
                 if (data.user.role === "admin") {
                     setCompanyId(data.user.Companies?.[0]?.id || '');
-                    console.log("🏢 Entreprise de l'admin :", data.user.Companies);
                 }
             } else {
                 setError("Utilisateur non trouvé");
@@ -232,7 +218,6 @@ const AddUserPage = () => {
     
     useEffect(() => {
         if (selectedUser) {
-            console.log("🔄 Mise à jour des champs avec l'utilisateur sélectionné", selectedUser);
     
             setFirstName(selectedUser.first_name);
             setLastName(selectedUser.last_name);
@@ -246,27 +231,21 @@ const AddUserPage = () => {
                 const managedSites = manager?.ManagedSites || [];
                 setSiteIds(managedSites.map(site => site.id));
     
-                console.log("📌 Sites mis à jour :", managedSites);
-    
                 const company = managedSites.length > 0 ? managedSites[0].Company : null;
                 setCompanyId(company?.id || '');
-    
-                console.log("🏢 Entreprise mise à jour :", company);
+
             }
     
             if (selectedUser.role === "manager") {
                 setSiteIds(selectedUser.ManagedSites?.map(site => site.id) || []);
-                console.log("📌 Sites gérés mis à jour :", selectedUser.ManagedSites);
     
                 const company = selectedUser.ManagedSites?.[0]?.Company || null;
                 setCompanyId(company?.id || '');
     
-                console.log("🏢 Entreprise du manager mise à jour :", company);
             }
     
             if (selectedUser.role === "admin") {
                 setCompanyId(selectedUser.Companies?.[0]?.id || '');
-                console.log("🏢 Entreprise de l'admin mise à jour :", selectedUser.Companies);
             }
         }
     }, [selectedUser]);
