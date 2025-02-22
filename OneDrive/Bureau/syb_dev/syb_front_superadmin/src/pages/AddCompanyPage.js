@@ -42,6 +42,8 @@ const AddCompanyPage = () => {
         }
     };
 
+    
+
     const fetchSectors = async () => {
         try {
             const response = await fetch('http://localhost:3000/api/sectors');

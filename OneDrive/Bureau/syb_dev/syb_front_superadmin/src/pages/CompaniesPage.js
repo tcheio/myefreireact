@@ -21,23 +21,32 @@ import {
 import { Search } from "@mui/icons-material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Collapse } from "@mui/material";
+import { Divider } from "@mui/material";
+import CompanyPopup from "../components/CompanyPopup";
 
 
 const CompaniesPage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [companies, setCompanies] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [selectedCompany, setSelectedCompany] = useState(null);
-  const [selectedSite, setSelectedSite] = useState(null);
-  const [applyToAllSites, setApplyToAllSites] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [insurances, setInsurances] = useState([]);
-  const [filteredInsurances, setFilteredInsurances] = useState([]);
-  const [insuranceSearch, setInsuranceSearch] = useState("");
-  const [siteInsurances, setSiteInsurances] = useState({});
-  const [expandedSite, setExpandedSite] = useState(null);
-  const [filteredCompanies, setFilteredCompanies] = useState([]);
+const [searchTerm, setSearchTerm] = useState("");
+const [companies, setCompanies] = useState([]);
+const [loading, setLoading] = useState(false);
+const [selectedCompany, setSelectedCompany] = useState(null);
+const [selectedSite, setSelectedSite] = useState(null);
+const [applyToAllSites, setApplyToAllSites] = useState(false);
+const [openDialog, setOpenDialog] = useState(false);
+const [insurances, setInsurances] = useState([]);
+const [filteredInsurances, setFilteredInsurances] = useState([]);
+const [insuranceSearch, setInsuranceSearch] = useState("");
+const [siteInsurances, setSiteInsurances] = useState({});
+const [expandedSite, setExpandedSite] = useState(null);
+const [filteredCompanies, setFilteredCompanies] = useState([]);
+const [openCompanyDetail, setOpenCompanyDetail] = useState(false);
+const [companyDetail, setCompanyDetail] = useState(null);
+const [expandedManager, setExpandedManager] = useState(null);
+const [openPopup, setOpenPopup] = useState(false);
+const [error, setError] = useState('');
 
+
+  
 
   useEffect(() => {
     fetchCompanies();
@@ -58,6 +67,43 @@ const CompaniesPage = () => {
     }
   };
   
+  const handleViewDetails = async (companyId) => {
+    try {
+        const response = await fetch(`http://localhost:3000/api/companies/${companyId}`);
+        if (!response.ok) throw new Error("Erreur lors de la récupération des détails.");
+
+        const company = await response.json();
+        console.log("🔍 Données reçues pour CompanyPopup :", company); // ✅ Vérifier la structure reçue
+
+        setSelectedCompany({
+            ...company,
+            sector: company.Sector?.name || "Non renseigné",
+            status: company.Status?.name || "Non renseigné",
+            sites: company.Sites?.map(site => ({
+                id: site.id,
+                name: site.name,
+                status: site.status_id, 
+                address: site.SiteAddress
+                    ? `${site.SiteAddress.nr_voie || ''} ${site.SiteAddress.type_voie || ''} ${site.SiteAddress.voie || ''}, ${site.SiteAddress.ville || ''}, ${site.SiteAddress.pays || ''} (${site.SiteAddress.code_postal || ''})`
+                    : "Adresse non renseignée",
+                managers: site.Managers || []
+            })) || [],
+            users: company.Users?.map(user => ({
+                id: user.id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email
+            })) || []
+        });
+
+        setOpenPopup(true);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des détails :", error.message);
+        setError("Impossible de charger les détails de l'entreprise.");
+    }
+};
+
+
 
   const fetchInsurances = async () => {
     try {
@@ -80,6 +126,57 @@ const CompaniesPage = () => {
     }
   };
   
+  const handleOpenCompanyDetail = async (companyId) => {
+    setCompanyDetail(null);
+    setOpenCompanyDetail(true);
+
+    try {
+        console.log("Requête envoyée à:", `http://localhost:3000/api/companies/${companyId}`);
+
+        const response = await fetch(`http://localhost:3000/api/companies/${companyId}`);
+        if (!response.ok) {
+            throw new Error(`Erreur API: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("Données reçues:", data);
+
+        if (data) {
+            setCompanyDetail({
+                id: data.id,
+                name: data.name,
+                siret: data.siret,
+                sector: data.Sector?.name || "Non renseigné",
+                status: data.Status?.name || "Non renseigné",
+                sites: data.Sites?.map(site => ({
+                    id: site.id,
+                    name: site.name,
+                    status: site.status_id,  // Mettre le nom du statut si disponible
+                    address: site.SiteAddress
+                        ? `${site.SiteAddress.nr_voie || ''} ${site.SiteAddress.type_voie || ''} ${site.SiteAddress.voie || ''}, ${site.SiteAddress.ville || ''}, ${site.SiteAddress.pays || ''} (${site.SiteAddress.code_postal || ''})`
+                        : "Adresse non renseignée"
+                })) || [],
+                users: data.Users?.map(user => ({
+                    id: user.id,
+                    firstName: user.first_name,
+                    lastName: user.last_name,
+                    email: user.email
+                })) || []
+            });
+        } else {
+            console.error("Détails de l'entreprise vides.");
+        }
+    } catch (error) {
+        console.error("Erreur lors du chargement des détails de l'entreprise:", error.message);
+    }
+};
+
+
+
+const handleCloseCompanyDetail = () => {
+    setOpenCompanyDetail(false);
+    setCompanyDetail(null);
+};
   
   const handleSearchCompany = (event) => {
     const query = event.target.value.toLowerCase();
@@ -216,7 +313,7 @@ const CompaniesPage = () => {
                         <Button
                             variant="outlined"
                             color="info"
-                            onClick={() => handleViewCompany(company.id)}
+                            onClick={() => handleViewDetails(company.id)}
                         >
                             Détail
                         </Button>
@@ -335,12 +432,21 @@ const CompaniesPage = () => {
             </Box>
         );
         })}
-
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Annuler</Button>
         </DialogActions>
-      </Dialog>
+    </Dialog>
+
+
+    {selectedCompany && (
+    <CompanyPopup 
+        open={openPopup} 
+        onClose={() => setOpenPopup(false)} 
+        company={selectedCompany} 
+        />
+    )}
+
     </Container>
   );
 };
